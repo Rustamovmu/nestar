@@ -2,6 +2,10 @@ import { Mutation, Resolver, Query, Args } from '@nestjs/graphql';
 import { MemberService } from './member.service';
 import { LoginInput, MemberInput } from '../../libs/dto/member/member.input';
 import { Member } from '../../libs/dto/member/member';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { AuthMember } from '../auth/decorators/authMember.decorator';
+import type { ObjectId } from 'mongoose';
 
 @Resolver()
 export class MemberResolver {
@@ -9,20 +13,30 @@ export class MemberResolver {
 
 	@Mutation(() => Member)
 	public async signup(@Args("input") input: MemberInput): Promise<Member> {
-             console.log('Mutation: signup');
-		    return this.memberService.signup(input);
+        console.log('Mutation: signup');
+		return this.memberService.signup(input);
 	}
 
 	@Mutation(() => Member)
 	public async login(@Args("input") input: LoginInput): Promise<Member> {
-            console.log('Mutation: login');
-		    return this.memberService.login(input);
+        console.log('Mutation: login');
+		return this.memberService.login(input);
 	}
 // Authenticated
+	@UseGuards(AuthGuard)
 	@Mutation(() => String)
-	public async updateMember(): Promise<string> {
+	public async updateMember(@AuthMember('_id') memberId: ObjectId): Promise<string> {
 		console.log('Mutation: updateMember');
+		console.log(memberId);
 		return this.memberService.updateMember();
+	}
+
+	@UseGuards(AuthGuard)
+	@Query(() => String)
+	public async checkAuth(@AuthMember('memberNick') memberNick: string): Promise<string> {
+		console.log('Query: checkAuth');
+		console.log('memberNick:', memberNick);
+		return `Hi ${memberNick}`;
 	}
 
 	@Query(() => String)

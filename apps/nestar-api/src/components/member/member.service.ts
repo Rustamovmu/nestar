@@ -60,7 +60,7 @@ export class MemberService {
 		return 'getMember exucuted';
 	}
 
-		public async getAllMembersByAdmin(): Promise<string> {
+	public async getAllMembersByAdmin(): Promise<string> {
 		return 'getAllMembersByAdmin exucuted';
 	}
 
