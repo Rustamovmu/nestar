@@ -108,14 +108,21 @@ export class MemberResolver {
 	@Mutation((returns) => String)
 	public async imageUploader(
 		@Args({ name: 'file', type: () => GraphQLUpload })
-		{ createReadStream, filename, mimetype }: FileUpload,
-		@Args('target') target: String,
+		file: unknown,
+		@Args('target') target: string,
 	): Promise<string> {
 		console.log('Mutation: imageUploader');
+		const { createReadStream, filename, mimetype } = await (file as Promise<FileUpload>);
+
 
 		if (!filename) throw new Error(Message.UPLOAD_FAILED);
+		const extension = path.extname(filename).toLowerCase();
+		const validExtension = ['.jpg', '.jpeg', '.png'].includes(extension);
 		const validMime = validMimeTypes.includes(mimetype);
-		if (!validMime) throw new Error(Message.PROVIDE_ALLOWED_FORMAT);
+		console.log('Upload file:', { filename, mimetype });
+		if (!validMime && !(mimetype === 'application/octet-stream' && validExtension)) {
+			throw new Error(`${Message.PROVIDE_ALLOWED_FORMAT} Received: ${mimetype || 'unknown'}`);
+		}
 
 		const imageName = getSerialForImage(filename);
 		const url = `uploads/${target}/${imageName}`;
@@ -146,9 +153,13 @@ export class MemberResolver {
 			try {
 				const { filename, mimetype, encoding, createReadStream } = await img;
 
-				const validMime = validMimeTypes.includes(mimetype);
-				if (!validMime) throw new Error(Message.PROVIDE_ALLOWED_FORMAT);
+				const extension = path.extname(filename).toLowerCase();
+				const validExtension = ['.jpg', '.jpeg', '.png'].includes(extension);
 
+				const validMime = validMimeTypes.includes(mimetype);
+				if (!validMime && !(mimetype === 'application/octet-stream' && validExtension)) {
+					throw new Error(`${Message.PROVIDE_ALLOWED_FORMAT} Received: ${mimetype || 'unknown'}`);
+				}
 				const imageName = getSerialForImage(filename);
 				const url = `uploads/${target}/${imageName}`;
 				const stream = createReadStream();
