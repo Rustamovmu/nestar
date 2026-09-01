@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { CommentResolver } from './comment.resolver';
 import { CommentService } from './comment.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import CommentSchema from '../../schemas/Comment.model';
+import PropertySchema from '../../schemas/Property.model';
 import { AuthModule } from '../auth/auth.module';
 import { MemberModule } from '../member/member.module';
 import { PropertyModule } from '../property/property.module';
-import { PropertyService } from '../property/property.service';
-import { BoardArticle } from '../../libs/dto/board-article/board-article';
+import { ViewModule } from '../view/view.module';
+import CommentSchema from '../../schemas/Comment.model';
 import { BoardArticleModule } from '../board-article/board-article.module';
 
 
@@ -21,11 +21,11 @@ import { BoardArticleModule } from '../board-article/board-article.module';
 			},
 		]),
 		AuthModule,
+        ViewModule,
 		MemberModule,
 		PropertyModule,
 		BoardArticleModule,
 	],
 	providers: [CommentResolver, CommentService],
-	exports: [PropertyService],
 })
 export class CommentModule {}

@@ -22,5 +22,6 @@ imports: [
 		MemberModule,
 	],
 	providers: [PropertyResolver, PropertyService],
+	exports: [PropertyService],
 })
 export class PropertyModule {}
