@@ -44,7 +44,8 @@ export class Property {
 
 	@Field(() => Int)
 	propertyComments!: number;
-
+    
+    @Field(() => Int)
 	propertyRank!: number;
 
 	@Field(() => [String])
