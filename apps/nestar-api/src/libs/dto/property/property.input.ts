@@ -3,7 +3,7 @@ import { IsIn, IsInt, IsNotEmpty, IsOptional, Length, Min } from 'class-validato
 import { PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
 import { ObjectId, Types } from 'mongoose';
 import { Direction } from '../../enums/common.enum';
-import { availableOptions, availablePropertySorts } from '../../config';
+import { availableOptions, availablePropertySorts } from '../../config'; 
 
 @InputType()
 export class PropertyInput {
