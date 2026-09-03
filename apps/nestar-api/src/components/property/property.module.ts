@@ -6,6 +6,7 @@ import PropertySchema from '../../schemas/Property.model';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ViewModule } from '../view/view.module';
 import { MemberModule } from '../member/member.module';
+import { LikeModule } from '../like/like.module';
 
 
 
@@ -20,6 +21,7 @@ imports: [
 		AuthModule,
 		ViewModule,
 		MemberModule,
+		LikeModule
 	],
 	providers: [PropertyResolver, PropertyService],
 	exports: [PropertyService],
