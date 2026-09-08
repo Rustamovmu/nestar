@@ -22,7 +22,7 @@ export class MemberService {
         @InjectModel("Member") private readonly memberModel: Model<Member>,
         @InjectModel("Follow") private readonly followModel: Model<Follower | Following>,
 		private authService: AuthService,
-		    private viewService: ViewService,
+		private viewService: ViewService,
         private likeService: LikeService,
 	) {}
     
