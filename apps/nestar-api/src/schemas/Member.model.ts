@@ -39,7 +39,7 @@ const MemberSchema = new Schema(
 			required: true,
 		},
 
-		memberFullname: {
+		memberFullName: {
 			type: String,
 		},
 
