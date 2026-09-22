@@ -62,7 +62,7 @@ export class AgentsInquiry {
 	limit!: number;
 
 	@IsOptional()
-	@IsIn([availableAgentSorts]) // arrayda bor bolganlarni
+	@IsIn(availableAgentSorts)
 	@Field(() => String, { nullable: true })
 	sort?: string;
 
@@ -105,7 +105,7 @@ export class MembersInquiry {
 	limit!: number;
 
 	@IsOptional()
-	@IsIn([availableMemberSorts]) // arrayda bor bolganlarni
+	@IsIn(availableMemberSorts)
 	@Field(() => String, { nullable: true })
 	sort?: string;
 
